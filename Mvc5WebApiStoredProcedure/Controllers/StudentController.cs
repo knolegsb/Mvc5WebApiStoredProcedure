@@ -11,6 +11,11 @@ namespace Mvc5WebApiStoredProcedure.Controllers
     {
         StudentDBContext context = new StudentDBContext();
 
+        public IEnumerable<StudentMaster> Get()
+        {
+            return context.StudentMasters.ToList();
+        }
+
         [HttpGet]
         public IEnumerable<USP_Student_Select_Result> Get(string StudentName, string StudentEmail)
         {
