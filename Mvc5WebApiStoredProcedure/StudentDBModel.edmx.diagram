@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="ec3f450c556d4089a3bb4aa802f6c53c" Name="Diagram1">
         <EntityTypeShape EntityType="Mvc5WebApiStoredProcedureModel.StudentMaster" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Mvc5WebApiStoredProcedureModel.Employee" Width="1.5" PointX="3" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

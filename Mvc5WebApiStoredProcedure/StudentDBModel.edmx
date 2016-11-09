@@ -4,7 +4,19 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Mvc5WebApiStoredProcedureModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Mvc5WebApiStoredProcedureModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar(max)" />
+          <Property Name="Country" Type="varchar" MaxLength="50" />
+          <Property Name="ProjectId" Type="int" />
+          <Property Name="ManagerName" Type="varchar" MaxLength="50" />
+          <Property Name="ProfileImage" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="StudentMasters">
           <Key>
             <PropertyRef Name="StdID" />
@@ -15,6 +27,29 @@
           <Property Name="Phone" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Address" Type="varchar" MaxLength="200" Nullable="false" />
         </EntityType>
+        <Function Name="AddNewEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Country" Type="varchar" Mode="In" />
+          <Parameter Name="ProjectId" Type="int" Mode="In" />
+          <Parameter Name="ManagerName" Type="varchar" Mode="In" />
+          <Parameter Name="ProfileImage" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteEmploye" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="ReadAllEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Country" Type="varchar" Mode="In" />
+          <Parameter Name="ManagerName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateEmployee" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Id" Type="int" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Email" Type="varchar" Mode="In" />
+          <Parameter Name="Country" Type="varchar" Mode="In" />
+          <Parameter Name="ManagerName" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="USP_Student_Delete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="StdID" Type="int" Mode="In" />
         </Function>
@@ -36,10 +71,10 @@
           <Parameter Name="Address" Type="varchar" Mode="In" />
         </Function>
         <EntityContainer Name="Mvc5WebApiStoredProcedureModelStoreContainer">
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StudentMasters" EntityType="Self.StudentMasters" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Mvc5WebApiStoredProcedureModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -56,7 +91,7 @@
         <EntityContainer Name="StudentDBContext" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="StudentMasters" EntityType="Self.StudentMaster" />
           <FunctionImport Name="USP_Student_Delete">
-            <Parameter Name="StdID" Mode="In" Type="Int32" />
+          <Parameter Name="StdID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="USP_Student_Insert" ReturnType="Collection(String)">
             <Parameter Name="StdName" Mode="In" Type="String" />
@@ -75,6 +110,30 @@
             <Parameter Name="Phone" Mode="In" Type="String" />
             <Parameter Name="Address" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="Employees" EntityType="Mvc5WebApiStoredProcedureModel.Employee" />
+          <FunctionImport Name="AddNewEmployee">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="String" />
+            <Parameter Name="ProjectId" Mode="In" Type="Int32" />
+            <Parameter Name="ManagerName" Mode="In" Type="String" />
+            <Parameter Name="ProfileImage" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteEmploye">
+          <Parameter Name="Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="ReadAllEmployee" ReturnType="Collection(Mvc5WebApiStoredProcedureModel.ReadAllEmployee_Result)">
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="String" />
+            <Parameter Name="ManagerName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateEmployee">
+            <Parameter Name="Id" Mode="In" Type="Int32" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Email" Mode="In" Type="String" />
+            <Parameter Name="Country" Mode="In" Type="String" />
+            <Parameter Name="ManagerName" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="USP_Student_Select_Result">
           <Property Type="Int32" Name="StdID" Nullable="false" />
@@ -82,6 +141,25 @@
           <Property Type="String" Name="Email" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="Phone" Nullable="false" MaxLength="20" />
           <Property Type="String" Name="Address" Nullable="false" MaxLength="200" />
+        </ComplexType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProjectId" Type="Int32" />
+          <Property Name="ManagerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProfileImage" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <ComplexType Name="ReadAllEmployee_Result">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Email" Nullable="true" />
+          <Property Type="String" Name="Country" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ManagerName" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -114,6 +192,33 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="USP_Student_Update" FunctionName="Mvc5WebApiStoredProcedureModel.Store.USP_Student_Update" />
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="Mvc5WebApiStoredProcedureModel.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="ProfileImage" ColumnName="ProfileImage" />
+                <ScalarProperty Name="ManagerName" ColumnName="ManagerName" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddNewEmployee" FunctionName="Mvc5WebApiStoredProcedureModel.Store.AddNewEmployee" />
+          <FunctionImportMapping FunctionImportName="DeleteEmploye" FunctionName="Mvc5WebApiStoredProcedureModel.Store.DeleteEmploye" />
+          <FunctionImportMapping FunctionImportName="ReadAllEmployee" FunctionName="Mvc5WebApiStoredProcedureModel.Store.ReadAllEmployee">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Mvc5WebApiStoredProcedureModel.ReadAllEmployee_Result">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="ManagerName" ColumnName="ManagerName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateEmployee" FunctionName="Mvc5WebApiStoredProcedureModel.Store.UpdateEmployee" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

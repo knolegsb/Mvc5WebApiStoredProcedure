@@ -28,6 +28,7 @@ namespace Mvc5WebApiStoredProcedure
         }
     
         public virtual DbSet<StudentMaster> StudentMasters { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
     
         public virtual int USP_Student_Delete(Nullable<int> stdID)
         {
@@ -95,6 +96,86 @@ namespace Mvc5WebApiStoredProcedure
                 new ObjectParameter("Address", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("USP_Student_Update", stdIDParameter, stdNameParameter, emailParameter, phoneParameter, addressParameter);
+        }
+    
+        public virtual int AddNewEmployee(string name, string email, string country, Nullable<int> projectId, string managerName, string profileImage)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var countryParameter = country != null ?
+                new ObjectParameter("Country", country) :
+                new ObjectParameter("Country", typeof(string));
+    
+            var projectIdParameter = projectId.HasValue ?
+                new ObjectParameter("ProjectId", projectId) :
+                new ObjectParameter("ProjectId", typeof(int));
+    
+            var managerNameParameter = managerName != null ?
+                new ObjectParameter("ManagerName", managerName) :
+                new ObjectParameter("ManagerName", typeof(string));
+    
+            var profileImageParameter = profileImage != null ?
+                new ObjectParameter("ProfileImage", profileImage) :
+                new ObjectParameter("ProfileImage", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddNewEmployee", nameParameter, emailParameter, countryParameter, projectIdParameter, managerNameParameter, profileImageParameter);
+        }
+    
+        public virtual int DeleteEmploye(Nullable<int> id)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteEmploye", idParameter);
+        }
+    
+        public virtual ObjectResult<ReadAllEmployee_Result> ReadAllEmployee(string name, string country, string managerName)
+        {
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var countryParameter = country != null ?
+                new ObjectParameter("Country", country) :
+                new ObjectParameter("Country", typeof(string));
+    
+            var managerNameParameter = managerName != null ?
+                new ObjectParameter("ManagerName", managerName) :
+                new ObjectParameter("ManagerName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReadAllEmployee_Result>("ReadAllEmployee", nameParameter, countryParameter, managerNameParameter);
+        }
+    
+        public virtual int UpdateEmployee(Nullable<int> id, string name, string email, string country, string managerName)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("Id", id) :
+                new ObjectParameter("Id", typeof(int));
+    
+            var nameParameter = name != null ?
+                new ObjectParameter("Name", name) :
+                new ObjectParameter("Name", typeof(string));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            var countryParameter = country != null ?
+                new ObjectParameter("Country", country) :
+                new ObjectParameter("Country", typeof(string));
+    
+            var managerNameParameter = managerName != null ?
+                new ObjectParameter("ManagerName", managerName) :
+                new ObjectParameter("ManagerName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateEmployee", idParameter, nameParameter, emailParameter, countryParameter, managerNameParameter);
         }
     }
 }

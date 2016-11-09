@@ -235,9 +235,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ngEmployeeController.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Employee.cs">
+      <DependentUpon>StudentDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -246,6 +252,9 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
+    <Compile Include="ReadAllEmployee_Result.cs">
+      <DependentUpon>StudentDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="StudentDBModel.Context.cs">
@@ -331,6 +340,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\ngEmp\app.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="StudentDBModel.Context.tt">
@@ -365,6 +375,7 @@
     <Content Include="StudentDBModel.edmx.diagram">
       <DependentUpon>StudentDBModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Views\ngEmployee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
